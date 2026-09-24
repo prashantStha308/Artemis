@@ -24,7 +24,7 @@ export default function LoadingScreen(){
 				ease: "easeInOut",
 			}}
 
-			className="z-[1000] isolate absolute top-0 left-0 bottom-0 right-0 inset-0 bg-purple-900 "
+			className="z-[1000] isolate absolute top-0 left-0 bottom-0 right-0 inset-0 bg-purple-900 overflow-hidden"
 		>
 			<motion.section
 				layout

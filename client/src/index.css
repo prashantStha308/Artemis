@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme{
+	--color-text-primary: #1E1E1E;
+  --colot-text-sub: #49454F;
+
+	--font-nutino: "Nunito", Ubuntu, sans-serif
+}
+
+*{
+	@apply cursor-none;
+}
+
+body{
+	@apply h-screen max-w-screen bg-purple-900 font-nutino text-text-primary overflow-x-hidden;
+}
+
+
+@supports (scrollbar-width: auto) {
+  body {
+    scrollbar-width: none;
+    scrollbar-color: var(--thumb-color) var(--track-color);
+  }
+}
+
+
+/*vinyl anim*/
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes trail {
+  0% {
+    transform: translate3d(var(--x), var(--y), 0) translate(-50%, -50%) translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--x), var(--y), 0) translate(-50%, -50%) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}

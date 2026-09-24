@@ -1,0 +1,9 @@
+import type { IIcon } from "@/types/decoration.types";
+
+export default function Pause({size = 24}: IIcon){
+	return(
+		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="2.30 2.30 5.40 5.40">
+			<path d="M3.6 2.3a.7.7 0 0 1 .7.7v4a.7.7 0 0 1-1.4 0V3a.7.7 0 0 1 .7-.7m2.8 0a.7.7 0 0 1 .7.7v4a.7.7 0 1 1-1.4 0V3a.7.7 0 0 1 .7-.7"/>
+		</svg>
+	)
+}

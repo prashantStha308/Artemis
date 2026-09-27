@@ -10,7 +10,8 @@ export default function MusicPlayer(){
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 	const { setAudioRef } = useMusicStore.getState();
 
-	const start = useLoadingStore(store => store.start)
+	const start = useLoadingStore(store => store.start);
+	const isMuted = useMusicStore(store => store.isMuted);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -19,11 +20,13 @@ export default function MusicPlayer(){
 
         setAudioRef(audio);
 
-        if (start) {
+        if (start && !isMuted) {
             audio.play().catch((error) => {
                 console.error("Failed to play music:", error);
             });
         }
+
+
     }, [start, setAudioRef]);
 
 	return(
@@ -33,7 +36,7 @@ export default function MusicPlayer(){
 			<VinylDisk />
 			<MusicController />
 
-			<audio ref={audioRef} src="/music/test.mp3" autoPlay={start} ></audio>
+			<audio ref={audioRef} src="/music/test.mp3" preload="" autoPlay={start} ></audio>
 
 		</section>
 	)

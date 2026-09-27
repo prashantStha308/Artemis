@@ -53,7 +53,6 @@ class SoundManager{
 				if( loaded === total ){
 					setIsLoading(false)
 				}
-
 			})
 		)
 	}

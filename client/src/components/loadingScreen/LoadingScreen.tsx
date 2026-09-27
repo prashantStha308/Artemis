@@ -1,13 +1,26 @@
-import { AnimatePresence, motion } from "motion/react";
-
-import VerticallyStackingButton from "../buttons/VerticallyStackingButton";
-import SparklingLoader from "./SparklingLoader";
-import useLoadingStore, { setStart } from "@/store/loading.store";
+import { AnimatePresence, motion, type Transition } from "motion/react";
+// Lib
 import soundManager from "@/lib/SoundManager";
+// stores
+import useLoadingStore, { setStart } from "@/store/loading.store";
+import useMusicStore, { toggleMuted } from "@/store/musicStore/music.store";
+// components
+import LoadingPageButton from "../buttons/LoadingPageButton";
+import SparklingLoader from "./SparklingLoader";
+import Switch from "../ui/widgets/Switch";
+// addons (move to sections accordingly)
+
+
+const transitions: Transition = {
+	duration: 0.6, 
+	ease: "easeInOut"
+}
 
 export default function LoadingScreen(){
 
 	const loadingValue = useLoadingStore(store => store.loadingValue);
+	const isMuted = useMusicStore(store => store.isMuted);
+
 	const isLoading = useLoadingStore(store => store.isLoading); //will be used later to disable button
 
 
@@ -24,8 +37,10 @@ export default function LoadingScreen(){
 				ease: "easeInOut",
 			}}
 
-			className="z-[1000] isolate absolute top-0 left-0 bottom-0 right-0 inset-0 bg-purple-900 overflow-hidden"
+			className="z-[1000] isolate absolute top-0 left-0 bottom-0 right-0 inset-0 bg-body overflow-hidden"
 		>
+
+			{/*Text section*/}
 			<motion.section
 				layout
 				className="relative h-full w-full z-10 flex flex-col gap-6 justify-center items-center text-amber-100"
@@ -40,16 +55,23 @@ export default function LoadingScreen(){
 						<AnimatePresence mode="popLayout">
 							<motion.h1
 								key={isLoading ? "loading-title" : "loaded-title"}
+
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
-								transition={{ duration: 0.6, ease: "easeInOut" }}
+								
+								transition={transitions}
+								
 								style={{ gridArea: "1 / 1" }}
 								className="w-full text-lg md:text-xl text-center font-semibold text-amber-300"
 							>
-								{ isLoading ? "Please stand by" : "The gnomes are waiting for you" }
+								{
+									isLoading ? "Please stand by" : "The gnomes are waiting for you"
+								}
 							</motion.h1>
+						
 						</AnimatePresence>
+					
 					</motion.div>
 
 					{/* subtitle stack */}
@@ -61,10 +83,13 @@ export default function LoadingScreen(){
 							
 							<motion.span
 								key={isLoading ? "loading-sub" : "loaded-sub"}
+
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
-								transition={{ duration: 0.6, ease: "easeInOut", delay: 0.1 }}
+								
+								transition={{ ...transitions, delay: 0.1 }}
+								
 								style={{ gridArea: "1 / 1" }}
 								className="w-full text-sm md:text-base"
 							>
@@ -74,24 +99,32 @@ export default function LoadingScreen(){
 								}
 
 							</motion.span>
+
 						</AnimatePresence>
 
 					</motion.div>
 
 				</motion.div>
 
+				{/*Loader*/}
 				<motion.div
 					layout
 					className="flex flex-col justify-center items-center gap-1"
 				>
 					<SparklingLoader loadingValue={loadingValue} />
+
 					<span className="text-xs" > Loading - <span className="text-amber-300"> {loadingValue}% </span> </span>
 				</motion.div>
 
-				<motion.div layout>
-					<VerticallyStackingButton
+				{/*button*/}
+				<motion.div
+					className="relative w-fit h-fit"
+				>
+
+					<LoadingPageButton
 						width={"w-56"}
 						disabled={isLoading}
+
 						onClick={() => {
 							setStart(true);
 							soundManager.makeSound("click2")
@@ -101,9 +134,45 @@ export default function LoadingScreen(){
 							soundManager.makeSound("hover2")
 						}}
 					>
-						Click me to Enter
-					</VerticallyStackingButton>
+						Click to Enter
+					</LoadingPageButton>
 				</motion.div>
+
+
+				{/* Preference section */}
+
+				<motion.section
+					className="relative flex flex-col gap-1 isolate px-4 py-3 rounded-md bg-white/15 text-purple-50 text-xs"
+				>
+
+					<motion.div
+						className="absolute w-full left-0 bg-body pointer-events-none"
+
+						style={{
+							height: "200%",
+							top: "-50%"
+						}}
+
+						initial={{y:0}}
+						animate={ !isLoading ? {y: "200%", display: "none"} : {y:0} }
+
+						transition={{
+							duration: 0.8,
+							ease: "easeInOut",
+						}}
+
+					/>
+
+					<Switch
+						label="Mute Audio"
+						onChange={()=>{
+							toggleMuted();
+
+							soundManager.makeSound("click")
+						}}
+						checked={isMuted}
+					/>
+				</motion.section>
 
 			</motion.section>
 

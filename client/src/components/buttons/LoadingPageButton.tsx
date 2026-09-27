@@ -1,7 +1,7 @@
 import {motion, type Variants} from "motion/react";
 
 
-export default function VerticallyStackingButton({
+export default function LoadingPageButton({
 	children,
 	direction = "left",
 	
@@ -73,7 +73,7 @@ export default function VerticallyStackingButton({
 		>
 
 			<motion.div
-				className="absolute w-full left-0 bg-purple-900"
+				className="absolute w-full left-0 bg-body"
 
 				style={{
 					height: "200%",
@@ -81,7 +81,7 @@ export default function VerticallyStackingButton({
 				}}
 
 				initial={{y:0}}
-				animate={ !disabled ? {y: "200%"} : {y:0} }
+				animate={ !disabled ? {y: "200%", display: "none"} : {y:0} }
 
 				transition={{
 					duration: 0.8,

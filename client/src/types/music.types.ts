@@ -4,6 +4,10 @@ export interface ITrack{
 
 
 export interface IMusicStore {
+
+  isMuted: boolean,
+  setIsMuted: (state:boolean) => void,
+
   isPlaying: boolean;
   setIsPlaying: (state: boolean) => void;
 
@@ -14,8 +18,8 @@ export interface IMusicStore {
   trackProgress: number;
   setTrackProgress: (value: number) => void;
 
-  volume: number;
-  setVolume: (value: number) => void;
+  musicVolume: number;
+  setMusicVolume: (value: number) => void;
 
   audioRef: HTMLAudioElement | null;
   setAudioRef: (ref: HTMLAudioElement | null) => void;
@@ -26,8 +30,11 @@ export interface IMusicStore {
   volumeSeekerRef: HTMLInputElement | null;
   setVolumeSeekerRef: (ref: HTMLInputElement | null) => void;
 
-  load: (music) => void;
+  load: (music:object) => void;
   play: () => void;
   pause: () => void;
+
+
   togglePlayState: () => void;
+  toggleMuted: () => void;
 }

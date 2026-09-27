@@ -1,9 +1,13 @@
+import soundManager from "@/lib/SoundManager";
 import type { IMusicStore } from "@/types/music.types";
 import {create} from "zustand";
 
 
 
 const useMusicStore = create((set, get) : IMusicStore => ({
+
+	isMuted: false,
+	setIsMuted: (state) => set( {isMuted: state} ),
 
 	isPlaying: true,
 	setIsPlaying: (state)=> set({isPlaying: state}),
@@ -14,8 +18,8 @@ const useMusicStore = create((set, get) : IMusicStore => ({
 	trackProgress: 0,
 	setTrackProgress: (value) => set({trackProgress: value}),
 
-	volume: 60,
-	setVolume: (value) => set({volume: value}),
+	musicVolume: 100,
+	setMusicVolume: (value) => set({musicVolume: value}),
 
 	audioRef: null,
 	setAudioRef: (ref) => set({ audioRef: ref }),
@@ -25,7 +29,6 @@ const useMusicStore = create((set, get) : IMusicStore => ({
 
 	volumeSeekerRef: null,
 	setVolumeSeekerRef: (ref) => set({ volumeSeekerRef: ref }),
-
 
 	// actions
 
@@ -57,8 +60,25 @@ const useMusicStore = create((set, get) : IMusicStore => ({
 		}
 	},
 
+	toggleMuted: ()=>{
+		const { isMuted, musicVolume } = get();
+
+		if( !isMuted ){
+			// will be muted
+			soundManager.setGain(0);
+		}else{
+			// will not be muted
+			// Gain should be normalized to 1
+			soundManager.setGain( musicVolume/100 );
+		}
+
+		set( {isMuted: !isMuted} )
+	},
+
 }) )
 
 export const togglePlayState = useMusicStore.getState().togglePlayState;
+export const toggleMuted = useMusicStore.getState().toggleMuted;
+
 
 export default useMusicStore;

@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import Diamond from "../icons/Diamond";
+// import Diamond from "../icons/Diamond";
 import Exclamation from "../icons/Exclamation";
+import DefaultCursor from "../icons/DefaultCursor";
 
 const cursorVarient = {
-	move: <Diamond size={16} />,
-	click: <Exclamation size={16} />,
+	move: <DefaultCursor size={20} />,
+	click: <Exclamation size={20} />,
 };
 
 // https://webdesign.tutsplus.com/javascript-sparkle-cursor--cms-109158t
@@ -73,6 +74,7 @@ export default function Cursor() {
 
 	const cursorRef = useRef<HTMLDivElement | null>(null);
 	const [cursorState, setCursorState] = useState<CursorKey>("move");
+	const posRef = useRef({ x: 0, y: 0 });
 
 	// const idRef = useRef(0);
 	// const [trialParticles, setTrialParticles] = useState< ITrailPoint[] >([]);
@@ -83,7 +85,10 @@ export default function Cursor() {
 			const currentRef = cursorRef.current;
 			
 			if (!currentRef) return;
-			currentRef.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+			
+			posRef.current = { x: e.clientX, y: e.clientY };
+
+			currentRef.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) `;
 
 			// handleCursorTrial(e);
 		};
@@ -97,7 +102,14 @@ export default function Cursor() {
 		// 	}, 1000);
 		// };
 
-		const handleMouseDown = () => setCursorState("click");
+		const handleMouseDown = () => {
+			setCursorState("click");
+
+			if(!cursorRef.current || !posRef.current) return;
+
+			cursorRef.current.style.transform = `translate3d(${posRef.x}px, ${posRef.y}px, 0) translate(-50%, -50%)`;
+	}
+
 		const handleMouseUp = () => setCursorState("move");
 
 		window.addEventListener("mousemove", handleMove);
@@ -122,7 +134,7 @@ export default function Cursor() {
 
 			<div
 				ref={cursorRef}
-				className=" absolute h-fit w-fit top-0 left-0 z-[9999999]  text-amber-500 pointer-events-none"
+				className=" absolute h-fit w-fit top-0 left-0 z-[9999999] text-amber-500 pointer-events-none"
 			>
 				{cursorVarient[cursorState]}
 			</div>

@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
+
+:root{
+  --thumb-color: #AD46FF;
+  --track-color: #FAF5FF;
+}
+
 @theme{
+  --color-body: #3C0366;
+
 	--color-text-primary: #1E1E1E;
   --colot-text-sub: #49454F;
 
@@ -12,12 +20,12 @@
 }
 
 body{
-	@apply h-screen max-w-screen bg-purple-900 font-nutino text-text-primary overflow-x-hidden;
+	@apply h-screen max-w-screen bg-body font-nutino text-text-primary md:overflow-hidden;
 }
 
 
 @supports (scrollbar-width: auto) {
-  body {
+  *{
     scrollbar-width: none;
     scrollbar-color: var(--thumb-color) var(--track-color);
   }

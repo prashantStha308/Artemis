@@ -11,7 +11,7 @@ export default function Switch( {
 		<div
 			className="relative flex items-center w-full gap-16 justify-between"
 			onPointerEnter={()=>{
-				soundManager.makeSound("hover2")
+				soundManager.makeSfxSound("hover2")
 			}}
 		>
 

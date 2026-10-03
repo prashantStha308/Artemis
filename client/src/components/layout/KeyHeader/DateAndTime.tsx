@@ -6,7 +6,7 @@ import useTimeStore, { useTimeLoop } from "@/store/time.store";
 export default function DateAndTime( {onClick} : {onClick: () => void} ){
 
 	useTimeLoop();
-	const now = useTimeStore(store => store.now);;
+	const now = useTimeStore(store => store.now);
 
 	const month = now.toLocaleDateString('en-US', { month: 'short' });
 	const day = now.toLocaleDateString('en-US', { weekday: 'short' });
@@ -22,7 +22,7 @@ export default function DateAndTime( {onClick} : {onClick: () => void} ){
 			className="px-4 py-0.5 w-fit border border-transparent hover:border-purple-400/45 hover:-translate-y-0.5 bg-white/45 hover:bg-white/45 active:bg-white/45 transition-all duration-300 ease-in-out rounded-sm flex items-center gap-2 text-[10px] md:text-xs text-text-sub"
 			onClick={onClick }
 			onPointerEnter={() =>{
-				soundManager.makeSound("hover2")
+				soundManager.makeSfxSound("hover2")
 			}}
 		>
 			<Clock

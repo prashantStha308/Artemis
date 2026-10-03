@@ -20,6 +20,8 @@ import useLoadingStore from "@/store/loading.store";
 import KeyHeader from "@/components/layout/KeyHeader"
 import LoadingScreen from "@/components/loadingScreen/LoadingScreen";
 
+
+
 export default function AppContent(){
 
 	const start = useLoadingStore(store => store.start)
@@ -41,7 +43,14 @@ export default function AppContent(){
 			</AnimatePresence>
 
 			<motion.div
-				className="absolute inset-0 z-50 bg-white mix-blend-color-dodge pointer-events-none "
+				className="absolute inset-0 z-50 bg-white mix-blend-color-dodge pointer-events-none overflow-hidden"
+
+				style={{
+					backgroundImage:"url('/images/inner-circles.png')",
+					backgroundRepeat: "no-repeat",
+					backgroundSize: "contain",
+					backgroundPosition: "center"
+				}}
 
 				animate={ start ? {
 					opacity: [1, 0, 1, 0]
@@ -56,23 +65,34 @@ export default function AppContent(){
 			/>
 
 			<section
-				className="relative isolate h-full w-full border-2 border-amber-500 rounded-xl flex flex-col justify-between gap-2 bg-purple-200 px-2 py-1 md:px-5 md:py-2 overflow-hidden"
+				className="relative z-40 isolate h-full w-full border-2 border-amber-500 rounded-xl bg-purple-200 overflow-hidden"
 			>
 
-				<KeyHeader />
+				{/*Deco - fixed to the frame, does not scroll*/}
+				{/*<CircularDeco />*/}
 
-				<main className="flex flex-col justify-center items-center flex-1 " >
+				{/*scrolling content*/}
+				<div
+					className="relative h-full w-full flex flex-col justify-between gap-2 px-2 py-1 md:px-5 md:py-2 overflow-auto"
+				>
+					<KeyHeader />
+
 					<AppRoutes />
-				</main>
-
-				{/*Deco*/}
-				<CircularDeco />
-				<div className="absolute inset-0 z-[999999] pointer-events-none" >
-					<IdealWholeAnimation />
 				</div>
+
+				<img
+					src="/images/bg.png" alt="profile"
+					className="-z-10 absolute top-0 h-full w-full object-cover"
+				/>
+
+
 			</section>
 
 			{/*decorations*/}
+
+			<div className="absolute inset-0 z-[999999] pointer-events-none" >
+				<IdealWholeAnimation />
+			</div>
 
 			{/*corner deco*/}
 			<MainCornerDecorator />

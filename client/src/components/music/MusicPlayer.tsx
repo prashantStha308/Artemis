@@ -31,12 +31,12 @@ export default function MusicPlayer(){
 
 	return(
 		<section
-			className="flex flex-col items-center gap-4"
+			className="flex flex-col items-center gap-8"
 		>
 			<VinylDisk />
 			<MusicController />
 
-			<audio ref={audioRef} src="/music/test.mp3" preload="" autoPlay={start} ></audio>
+			<audio className="opacity-0 -z-[99999]" ref={audioRef} src="/music/test.mp3" preload="" autoPlay={start} ></audio>
 
 		</section>
 	)

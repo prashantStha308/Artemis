@@ -74,7 +74,7 @@ export default function Cursor() {
 
 	const cursorRef = useRef<HTMLDivElement | null>(null);
 	const [cursorState, setCursorState] = useState<CursorKey>("move");
-	const posRef = useRef({ x: 0, y: 0 });
+	const posRef = useRef<{ x:number, y:number }>({ x: 0, y: 0 });
 
 	// const idRef = useRef(0);
 	// const [trialParticles, setTrialParticles] = useState< ITrailPoint[] >([]);

@@ -65,11 +65,11 @@ const useMusicStore = create((set, get) : IMusicStore => ({
 
 		if( !isMuted ){
 			// will be muted
-			soundManager.setGain(0);
+			soundManager.setSfxGain(0);
 		}else{
 			// will not be muted
 			// Gain should be normalized to 1
-			soundManager.setGain( musicVolume/100 );
+			soundManager.setSfxGain( musicVolume/100 );
 		}
 
 		set( {isMuted: !isMuted} )

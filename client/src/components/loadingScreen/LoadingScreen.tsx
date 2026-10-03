@@ -46,6 +46,17 @@ export default function LoadingScreen(){
 				className="relative h-full w-full z-10 flex flex-col gap-6 justify-center items-center text-amber-100"
 			>
 				<motion.div layout className="relative flex flex-col gap-1 px-8 text-center w-full max-w-md mx-auto">
+					{/* Icon */}
+					<div
+						className="flex w-full h-fit justify-center"
+					>
+						<img
+							src="/images/white.png" alt="portrait.svg"
+							className="text-white aspect-square object-contain w-26"
+
+						/>
+					</div>
+
 					{/* h1 stack */}
 					<motion.div
 						layout
@@ -109,11 +120,11 @@ export default function LoadingScreen(){
 				{/*Loader*/}
 				<motion.div
 					layout
-					className="flex flex-col justify-center items-center gap-1"
+					className="flex flex-col justify-center items-center gap-2"
 				>
 					<SparklingLoader loadingValue={loadingValue} />
 
-					<span className="text-xs" > Loading - <span className="text-amber-300"> {loadingValue}% </span> </span>
+					<span className="text-amber-300 text-xs"> {loadingValue}% </span>
 				</motion.div>
 
 				{/*button*/}
@@ -127,11 +138,11 @@ export default function LoadingScreen(){
 
 						onClick={() => {
 							setStart(true);
-							soundManager.makeSound("click2")
+							soundManager.makeSfxSound("click2")
 						}}
 
 						onMouseEnter={()=>{
-							soundManager.makeSound("hover2")
+							soundManager.makeSfxSound("hover2")
 						}}
 					>
 						Click to Enter
@@ -142,11 +153,11 @@ export default function LoadingScreen(){
 				{/* Preference section */}
 
 				<motion.section
-					className="relative flex flex-col gap-1 isolate px-4 py-3 rounded-md bg-white/15 text-purple-50 text-xs"
+					className="isolate relative flex flex-col gap-1 isolate px-4 py-3 rounded-md bg-white/15 text-purple-50 text-xs"
 				>
 
 					<motion.div
-						className="absolute w-full left-0 bg-body pointer-events-none"
+						className="absolute z-50 w-full left-0 bg-body pointer-events-none"
 
 						style={{
 							height: "200%",
@@ -168,7 +179,7 @@ export default function LoadingScreen(){
 						onChange={()=>{
 							toggleMuted();
 
-							soundManager.makeSound("click")
+							soundManager.makeSfxSound("click")
 						}}
 						checked={isMuted}
 					/>

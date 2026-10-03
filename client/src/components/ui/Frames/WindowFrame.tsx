@@ -48,7 +48,7 @@ export default function WindowFrame( {
 		>
             <div
                 ref={nodeRef}
-                className={`absolute z-[999999999999] ${positionClass}`}
+                className={`absolute z-[99999] ${positionClass}`}
             >
 
 
@@ -100,7 +100,7 @@ export default function WindowFrame( {
 								className="p-1 group"
 								onPointerDown={() => {
 									onClose();
-									soundManager.makeSound("click")
+									soundManager.makeSfxSound("click")
 								}}
 							>
 								<div

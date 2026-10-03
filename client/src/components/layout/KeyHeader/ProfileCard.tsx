@@ -4,6 +4,8 @@ import Mars from "../../icons/Mars";
 import soundManager from "@/lib/SoundManager";
 import useUIStore from "@/store/UI/ui.store";
 
+// const delay = 0.5;
+
 const containerVariants: Variants = {
 	hidden: { opacity: 0 },
 	visible: {
@@ -39,9 +41,10 @@ export default function ProfilCard(){
 			variants={containerVariants}
 			initial="hidden"
 			animate="visible"
-			onPointerEnter={()=> soundManager.makeSound("hover2")}
+
+			onPointerEnter={()=> soundManager.makeSfxSound("hover2")}
 			onPointerDown={() =>{
-				soundManager.makeSound("click2");
+				soundManager.makeSfxSound("click2");
 				setProfileCardOpen(true)
 			}}
 		>

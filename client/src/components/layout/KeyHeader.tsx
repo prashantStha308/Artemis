@@ -6,6 +6,7 @@ import DateAndTimeWidget from "../ui/widgets/DateAndTimeWidget";
 import ProfileWidget from "../ui/widgets/ProfileWidget";
 import soundManager from "@/lib/SoundManager";
 
+import DefaultCursor from "../icons/DefaultCursor";
 
 export default function KeyHeader(){
 
@@ -24,10 +25,9 @@ export default function KeyHeader(){
 			<DateAndTime
 				onClick={ () =>{
 					setClockOpen(true)
-					soundManager.makeSound("click2")
+					soundManager.makeSfxSound("click2")
 				} }
 			/>
-
 			<AnimatePresence
 				mode="popLayout"
 			>

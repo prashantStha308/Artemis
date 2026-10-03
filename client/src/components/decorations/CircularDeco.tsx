@@ -1,63 +1,67 @@
 import useLoadingStore from "@/store/loading.store";
 import { motion, type Variants } from "motion/react"
-// import { useState, useEffect, useRef } from "react"
+import {useResizeObserver} from "use-resize-observer"
 
-
-const width = window.innerWidth;
-const height = window.innerHeight;
+type Size = { width: number; height: number }
 
 const decoVariants: Variants = {
-    initial: {
+    initial: ({ width, height }: Size) => ({
         x: width / 2,
         y: height / 2,
         width: 0,
         height: 0,
-    },
+    }),
 
-    leftAnimate: {
+    leftAnimate: ({ height }: Size) => ({
         x: -height / 2,
-        y: height / 2 - height / 2,
+        y: 0,
         width: height,
         height: height,
         borderColor: ["#fcd34d", "#d8b4fe"],
-    },
+    }),
 
-    rightAnimate: {
+    rightAnimate: ({ width, height }: Size) => ({
         x: width - height / 2,
         y: 0,
         width: height,
         height: height,
         borderColor: ["#fcd34d", "#d8b4fe"],
-    },
+    }),
 
-    topAnimate: {
+    topAnimate: ({ width }: Size) => ({
         x: 0,
         y: -width / 2,
         width: width,
         height: width,
         borderColor: ["#fcd34d", "#d8b4fe"],
-    },
+    }),
 
-    bottomAnimate: {
+    bottomAnimate: ({ width, height }: Size) => ({
         x: 0,
         y: height - width / 2,
         width: width,
         height: width,
         borderColor: ["#fcd34d", "#d8b4fe"],
-    },
+    }),
 };
 
 export default function CircularDeco(){
 
-
 	const start = useLoadingStore(store => store.start);
 	const delay = 0.5;
 
+	const { ref, width = 0, height = 0 } = useResizeObserver<HTMLDivElement>();
+	const size: Size = { width, height };
+
 	return(
-		<div className="absolute inset-0 -z-10 pointer-events-none">
+		<div
+			ref={ref}
+			className="absolute inset-0  pointer-events-none overflow-hidden rounded-xl"
+		>
 		{/*left*/}
 			<motion.div
 				variants={decoVariants}
+				custom={size}
 				initial="initial"
 				animate={ start ? "leftAnimate" : "initial" }
 
@@ -73,6 +77,7 @@ export default function CircularDeco(){
 
 			<motion.div
 				variants={decoVariants}
+				custom={size}
 				initial="initial"
 				animate={ start ? "topAnimate" : "initial" }
 
@@ -89,6 +94,7 @@ export default function CircularDeco(){
 
 			<motion.div
 				variants={decoVariants}
+				custom={size}
 				initial="initial"
 				animate={ start ? "bottomAnimate" : "initial" }
 
@@ -107,6 +113,7 @@ export default function CircularDeco(){
 			{/*right*/}
 			<motion.div
 				variants={decoVariants}
+				custom={size}
 				initial="initial"
 				animate={ start ? "rightAnimate" : "initial" }
 

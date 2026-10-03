@@ -3,11 +3,13 @@ import { setIsLoading, setLoadingValue } from "@/store/loading.store";
 export type sfxEvents = "click" | "click2" | "hover" | "hover2" | "volumeUp" | "volumeDown";
 
 class SoundManager{
-
 	private ctx:AudioContext;
+
+	private masterGain:GainNode;
+	private musicGain:GainNode;
 	private sfxGain:GainNode;
 
-	private audioSources : Record<sfxEvents, string> = {
+	private sfxSources : Record<sfxEvents, string> = {
 		click: "/music/click.wav",
 		click2: "/music/click_2.wav",
 
@@ -22,19 +24,27 @@ class SoundManager{
 
 	constructor(){
 		this.ctx = new AudioContext();
+
+		this.masterGain = this.ctx.createGain();
+		this.masterGain.gain.value = 1;
+
+		this.musicGain = this.ctx.createGain();
+		this.musicGain.gain.value = 1;
+
 		this.sfxGain = this.ctx.createGain();
 		this.sfxGain.gain.value = 1;
 
 		this.audioBuffers = {}
 
-		this.sfxGain.connect(this.ctx.destination);
+		this.musicGain.connect(this.masterGain);
+		this.sfxGain.connect(this.masterGain);
+		this.masterGain.connect(this.ctx.destination);
 	}
 
 	async load() : Promise<void> {
-
 		setIsLoading(true);
 
-		const entries = Object.entries(this.audioSources) as [sfxEvents, string][] ;
+		const entries = Object.entries(this.sfxSources) as [sfxEvents, string][];
 		const total = entries.length;
 		let loaded = 0;
 
@@ -57,7 +67,7 @@ class SoundManager{
 		)
 	}
 
-	async makeSound( event:sfxEvents ){
+	async makeSfxSound( event:sfxEvents ){
 	    if (this.ctx.state === "suspended") {
 	        await this.ctx.resume();
 	    }
@@ -74,7 +84,7 @@ class SoundManager{
 		audioSource.start();
 	}
 
-	setGain(gainValue:number){
+	setSfxGain(gainValue:number){
 		this.sfxGain.gain.value = gainValue;
 	}
 

@@ -12,15 +12,15 @@ export default function MusicController(){
 
 	return(
 		<section
-			className="w-full flex justify-center items-center gap-4 text-purple-900 "
+			className="w-full flex justify-center items-center gap-4 text-purple-200 "
 		>
 			<button
-				className="hover:text-white stroke-1"
+				className="stroke-1 hover:text-purple-400"
 				onClick={()=>{
-					soundManager.makeSound("click2")
+					soundManager.makeSfxSound("click2")
 				}}
 				onPointerEnter={()=>{
-					soundManager.makeSound("hover")
+					soundManager.makeSfxSound("hover")
 				}}
 			>
 				<Previous />
@@ -29,12 +29,12 @@ export default function MusicController(){
 			<div
 				className="relative flex items-center justify-center aspect-square h-11 rounded-full hover:bg-purple-500 transition-colors duration-75 ease-in-out group"
 				onClick={async () => {
-					soundManager.makeSound("click")
+					soundManager.makeSfxSound("click")
 					await togglePlayState();
 				} }
 
 				onPointerEnter={()=>{
-					soundManager.makeSound("hover2")
+					soundManager.makeSfxSound("hover2")
 				}}
 			>
 
@@ -54,12 +54,12 @@ export default function MusicController(){
 			</div>
 
 			<button
-				className="hover:text-white stroke-1"
+				className="stroke-1 hover:text-purple-400"
 				onClick={()=>{
-					soundManager.makeSound("click2")
+					soundManager.makeSfxSound("click2")
 				}}
 				onPointerEnter={()=>{
-					soundManager.makeSound("hover")
+					soundManager.makeSfxSound("hover")
 				}}
 			>
 				<Next />
